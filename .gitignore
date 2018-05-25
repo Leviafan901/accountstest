@@ -19,7 +19,9 @@ $RECYCLE.BIN/
 
 #Java
 *.class
-target/
+*.iml
+.idea/*
+target/*
 
 # =========================
 # Operating System Files
