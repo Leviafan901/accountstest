@@ -23,13 +23,13 @@ public class MailBoxPage extends AbstractPage {
     @FindBy(css = "div.mail-User-Name")
     private WebElement userMailBoxName;
 
-    @FindBy(css = "a[data-metric='Выход']")
+    @FindBy(css = "a[data-metric='Р’С‹Р№С‚Рё']")
     private WebElement logoutButton;
     
     @FindBy(css = "span._nb-checkbox-flag._nb-checkbox-normal-flag")  
     private WebElement selectAllMessagesCheckbox;
     
-    @FindBy(css = "div[title = 'Удалить (Delete)']")
+    @FindBy(css = "div[title = 'РЈРґР°Р»РёС‚СЊ (Delete)']")
     private WebElement deleteButton;
 
     private WebDriver webDriver;
