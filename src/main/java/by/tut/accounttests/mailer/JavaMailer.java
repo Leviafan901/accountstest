@@ -10,8 +10,7 @@ import java.util.Properties;
 
 public  class JavaMailer {
 
-	private final static String SENT_FOLDER_NAME = "������������";
-	
+	private final static String SENT_FOLDER_NAME = "Отправленные";
     public static boolean sendMail(UserAccount firstAccount, UserAccount secondAccount, Mail mail) {
     
         String addressee = secondAccount.getEmail();
