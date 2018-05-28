@@ -70,7 +70,7 @@ public class PagesTest {
         Assert.assertTrue(isSentMail);
     }
 
-    @Test
+    /*@Test
     public void shouldCheckMailInboxFolderAndReturnTrue() {
     	LOGGER.info("Step 8. Load page tiwh url http://mail.tut.by.");
         pages.mailTutByPage().loadPage();
@@ -84,7 +84,7 @@ public class PagesTest {
         pages.mailBoxPage().logOut();
         
         Assert.assertTrue(isInboxMail);
-    }
+    }*/
     
     @AfterClass(alwaysRun = true)
     public void teardown() {

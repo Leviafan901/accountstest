@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 #Java
 *.class
 *.iml
+*.log
+test-output/*
 .idea/*
 target/*
 
