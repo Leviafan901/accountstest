@@ -42,7 +42,7 @@ public class PagesTest {
     @BeforeClass(alwaysRun = true)
     public void setup(ITestContext testContext)  {
     	LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
-        //JavaMailer.sendMail(mailer, addressee, MAIL);
+        JavaMailer.sendMail(mailer, addressee, MAIL);
         
         driver = WebDriverHandler.loadDriver(BrowserType.CHROME);
         pages = PageFactory.initElements(driver, Pages.class);
@@ -62,15 +62,15 @@ public class PagesTest {
         pages.mailBoxPage().getIntoSentFolder();
         LOGGER.info("Step 5. Check sent messages to the account " + addressee.getEmail());
         boolean isSentMail = pages.mailBoxPage().checkMail(addressee, MAIL);
-       // LOGGER.info("Step 6. Delete all sented messages, clear up for next test class instance.");
-        //pages.mailBoxPage().deleteMessages();
+        LOGGER.info("Step 6. Delete all sented messages, clear up for next test class instance.");
+        pages.mailBoxPage().deleteMessages();
         LOGGER.info("Step 7. Logout from account" + mailer.getEmail());
         pages.mailBoxPage().logOut();
 
         Assert.assertTrue(isSentMail);
     }
 
-    /*@Test
+    @Test
     public void shouldCheckMailInboxFolderAndReturnTrue() {
     	LOGGER.info("Step 8. Load page tiwh url http://mail.tut.by.");
         pages.mailTutByPage().loadPage();
@@ -78,13 +78,13 @@ public class PagesTest {
         pages.mailTutByPage().logIn(addressee);
         LOGGER.info("Step 10. Check messages in inbox foldr from account " + mailer.getEmail());
         boolean isInboxMail = pages.mailBoxPage().checkMail(mailer, MAIL);
-       // LOGGER.info("Step 11. Delete all sented messages, clear up for next test class instance.");
-       // pages.mailBoxPage().deleteMessages();
+        LOGGER.info("Step 11. Delete all sented messages, clear up for next test class instance.");
+        pages.mailBoxPage().deleteMessages();
         LOGGER.info("Step 12. Logout from account" + addressee.getEmail());
         pages.mailBoxPage().logOut();
         
         Assert.assertTrue(isInboxMail);
-    }*/
+    }
     
     @AfterClass(alwaysRun = true)
     public void teardown() {

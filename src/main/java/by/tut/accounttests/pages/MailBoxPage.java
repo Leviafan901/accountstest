@@ -29,7 +29,7 @@ public class MailBoxPage extends AbstractPage {
     @FindBy(css = "span._nb-checkbox-flag._nb-checkbox-normal-flag")  
     private WebElement selectAllMessagesCheckbox;
     
-    @FindBy(css = "div[title = 'Удалить (Delete)']")
+    @FindBy(css = "div[title = \"Удалить (Delete)\"]")
     private WebElement deleteButton;
 
     private WebDriver webDriver;
