@@ -70,7 +70,7 @@ public class MailBoxPage extends AbstractPage {
     public boolean checkMail(UserAccount userAccount, Mail mail) {
     	waitUntilElementIsPresent(mailAuthorElement);
         String mailAuthor = mailAuthorElement.getText();
-        String email = userAccount.getLogin();
+        String email = userAccount.getEmail();
         if(Objects.nonNull(mailAuthor) && mailAuthor.equals(email)) {
             String currentMailTitle = mailTitleElement.getText();
             String mailTitle = mail.getMailTitle();
