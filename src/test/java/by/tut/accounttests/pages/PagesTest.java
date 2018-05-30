@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 
 public class PagesTest {
 
-	private final static Logger LOGGER = TestLogger.getLogger(PagesTest.class, "pagestest.log");
+	private final static Logger LOGGER = TestLogger.getLogger(PagesTest.class);
 	
     private static final Mail MAIL = new Mail("Test mail", "Test mail.");
 
@@ -33,14 +33,14 @@ public class PagesTest {
 
     @Factory(dataProvider = "accounts", dataProviderClass = TestData.class)
     public PagesTest(UserAccount mailer, UserAccount addressee) {
-    	LOGGER.info("Started test suite!");
-    	LOGGER.info("Test will be executed with next test data: " + addressee.getEmail() + ", " + mailer.getEmail());
     	this.mailer = mailer;
         this.addressee = addressee;
     }
 
     @BeforeClass(alwaysRun = true)
     public void setup(ITestContext testContext)  {
+        LOGGER.info("Started test suite!");
+        LOGGER.info("Test will be executed with next test data: " + addressee.getEmail() + ", " + mailer.getEmail());
     	LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
         JavaMailer.sendMail(mailer, addressee, MAIL);
         

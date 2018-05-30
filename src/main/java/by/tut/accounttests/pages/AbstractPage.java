@@ -13,7 +13,7 @@ public abstract class AbstractPage {
 
     public AbstractPage(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, 15);
+        this.wait = new WebDriverWait(driver, 20);
     }
     
     protected void setPageUrl(String pageUrl) {

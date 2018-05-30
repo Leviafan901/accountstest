@@ -10,14 +10,4 @@
         <email>alexei.sosenkov@tut.by</email>
         <password>223223223223</password>
     </UserAccount>
-    <UserAccount>
-        <login>leha.sosenkov</login>
-        <email>leha.sosenkov@tut.by</email>
-        <password>223223223</password>
-    </UserAccount>
-    <UserAccount>
-        <login>alexei.sosenkov</login>
-        <email>alexei.sosenkov@tut.by</email>
-        <password>223223223223</password>
-    </UserAccount>
 </Accounts>
