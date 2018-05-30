@@ -44,7 +44,7 @@ public class PagesTest {
     	LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
         JavaMailer.sendMail(mailer, addressee, MAIL);
         
-        driver = WebDriverHandler.loadDriver(BrowserType.CHROME);
+        driver = WebDriverHandler.loadDriver(BrowserType.FIREFOX);
         pages = PageFactory.initElements(driver, Pages.class);
         testContext.setAttribute("WebDriver", this.driver);// set driver for listeners
         accountsMap.add("shouldCheckMailInSentFolderAndReturnTrue", mailer.getEmail());

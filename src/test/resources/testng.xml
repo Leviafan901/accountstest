@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Test">
-	<listeners>
-		<listener class-name="by.tut.accounttests.testlisteners.reporter.ReportListener" />
-	</listeners>
+	<!--<listeners>-->
+		<!--<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />-->
+	<!--</listeners>-->
 	<test name="PagesTest" group-by-instances="true"
 		preserve-order="true">
 		<classes>
