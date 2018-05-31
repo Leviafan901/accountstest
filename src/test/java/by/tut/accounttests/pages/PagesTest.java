@@ -1,6 +1,5 @@
 package by.tut.accounttests.pages;
 
-import by.tut.accounttests.data.AccountsMap;
 import by.tut.accounttests.data.TestData;
 import by.tut.accounttests.domain.UserAccount;
 import by.tut.accounttests.mailer.JavaMailer;
@@ -29,7 +28,6 @@ public class PagesTest {
     private WebDriver driver;
     private UserAccount mailer;
     private UserAccount addressee;
-    private AccountsMap accountsMap = new AccountsMap();
 
     @Factory(dataProvider = "accounts", dataProviderClass = TestData.class)
     public PagesTest(UserAccount mailer, UserAccount addressee) {
@@ -47,24 +45,21 @@ public class PagesTest {
         driver = WebDriverHandler.loadDriver(BrowserType.FIREFOX);
         pages = PageFactory.initElements(driver, Pages.class);
         testContext.setAttribute("WebDriver", this.driver);// set driver for listeners
-        accountsMap.add("shouldCheckMailInSentFolderAndReturnTrue", mailer.getEmail());
-        accountsMap.add("shouldCheckMailInboxFolderAndReturnTrue", addressee.getEmail());
-        testContext.setAttribute("Accounts", accountsMap);// set data for end report
     }
 
     @Test
     public void shouldCheckMailInSentFolderAndReturnTrue() {
-    	LOGGER.info("Step 2. Load page tiwh url http://mail.tut.by.");
+    	LOGGER.info("Step 2. Load page with url http://mail.tut.by.");
         pages.mailTutByPage().loadPage();
         LOGGER.info("Step 3. Login mailbox with account " + mailer.getEmail());
-       // pages.mailTutByPage().logIn(mailer);
+        pages.mailTutByPage().logIn(mailer);
         LOGGER.info("Step 4. Get into sent folder of account " + mailer.getEmail());
-        //pages.mailBoxPage().getIntoSentFolder();
+        pages.mailBoxPage().getIntoSentFolder();
         LOGGER.info("Step 5. Check sent messages to the account " + addressee.getEmail());
         boolean isSentMail = pages.mailBoxPage().checkMail(addressee, MAIL);
         LOGGER.info("Step 6. Delete all sented messages, clear up for next test class instance.");
-       // pages.mailBoxPage().deleteMessages();
-        LOGGER.info("Step 7. Logout from account" + mailer.getEmail());
+        pages.mailBoxPage().deleteMessages();
+        LOGGER.info("Step 7. Logout from account " + mailer.getEmail());
         pages.mailBoxPage().logOut();
 
         Assert.assertTrue(isSentMail);
@@ -80,7 +75,7 @@ public class PagesTest {
         boolean isInboxMail = pages.mailBoxPage().checkMail(mailer, MAIL);
         LOGGER.info("Step 11. Delete all sented messages, clear up for next test class instance.");
         pages.mailBoxPage().deleteMessages();
-        LOGGER.info("Step 12. Logout from account" + addressee.getEmail());
+        LOGGER.info("Step 12. Logout from account " + addressee.getEmail());
         pages.mailBoxPage().logOut();
         
         Assert.assertTrue(isInboxMail);
