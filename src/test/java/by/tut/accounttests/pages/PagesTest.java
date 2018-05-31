@@ -57,13 +57,13 @@ public class PagesTest {
     	LOGGER.info("Step 2. Load page tiwh url http://mail.tut.by.");
         pages.mailTutByPage().loadPage();
         LOGGER.info("Step 3. Login mailbox with account " + mailer.getEmail());
-        pages.mailTutByPage().logIn(mailer);
+       // pages.mailTutByPage().logIn(mailer);
         LOGGER.info("Step 4. Get into sent folder of account " + mailer.getEmail());
-        pages.mailBoxPage().getIntoSentFolder();
+        //pages.mailBoxPage().getIntoSentFolder();
         LOGGER.info("Step 5. Check sent messages to the account " + addressee.getEmail());
         boolean isSentMail = pages.mailBoxPage().checkMail(addressee, MAIL);
         LOGGER.info("Step 6. Delete all sented messages, clear up for next test class instance.");
-        pages.mailBoxPage().deleteMessages();
+       // pages.mailBoxPage().deleteMessages();
         LOGGER.info("Step 7. Logout from account" + mailer.getEmail());
         pages.mailBoxPage().logOut();
 

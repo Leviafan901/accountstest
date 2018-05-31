@@ -4,6 +4,9 @@
 	<!--<listeners>-->
 		<!--<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />-->
 	<!--</listeners>-->
+	<listeners>
+		<listener class-name="by.tut.accounttests.testlisteners.reporter.ReportListener"/>
+	</listeners>
 	<test name="PagesTest" group-by-instances="true"
 		preserve-order="true">
 		<classes>
