@@ -3,11 +3,14 @@ package by.tut.accounttests.testlisteners.reporter;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.epam.reportportal.message.ReportPortalMessage;
+import com.epam.reportportal.service.ReportPortal;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +23,7 @@ import org.testng.TestListenerAdapter;
  */
 public class ReportListener extends TestListenerAdapter {
 
-	private final static Logger LOGGER = Logger.getLogger(ReportListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("binary_data_logger");
 
 	@Override
 	public void onTestFailure(ITestResult testResult) {
@@ -49,7 +52,6 @@ public class ReportListener extends TestListenerAdapter {
 		FileUtils.copyFile(scrFile, new File(filePath));
 
 		String rpMessage = testName + "_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
-		ReportPortalMessage message = new ReportPortalMessage(new File(filePath), rpMessage);
-		LOGGER.info(message);
+		ReportPortal.emitLog(testName, "INFO", Calendar.getInstance().getTime(), scrFile);
 	}
 }

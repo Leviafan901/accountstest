@@ -24,7 +24,7 @@ public  class JavaMailer {
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.port", port);
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.debug", "true");
+        properties.put("mail.debug", "false");
         properties.put("mail.imap.port", "993");
         properties.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.imap.socketFactory.fallback","false");

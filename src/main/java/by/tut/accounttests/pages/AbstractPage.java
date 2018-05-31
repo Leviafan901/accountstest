@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 public abstract class AbstractPage {
 
 	private WebDriver driver;
@@ -37,7 +38,7 @@ public abstract class AbstractPage {
 	}
 
 	protected void waitUntilElementIsPresent(WebElement element){
-    	wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
 	protected void clickElement(WebElement element){
