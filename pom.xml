@@ -26,13 +26,13 @@
 		<dependency>
 			<groupId>com.epam.reportportal</groupId>
 			<artifactId>agent-java-testng</artifactId>
-			<version>LATEST</version>
+			<version>4.2.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.epam.reportportal</groupId>
 			<artifactId>logger-java-log4j</artifactId>
-			<version>LATEST</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
