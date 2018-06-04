@@ -1,12 +1,14 @@
 package by.tut.accounttests.util;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class WebDriverHandler {
 
@@ -19,14 +21,18 @@ public class WebDriverHandler {
 	 * @param BrowserType type
 	 * @return WebDriver
 	 */
-	public static WebDriver loadDriver(BrowserType type) {
+	public static WebDriver loadDriver(BrowserType type, DesiredCapabilities capabilities) {
 		switch (type) {
 		case FIREFOX:
 			WebDriverManager.firefoxdriver().setup();
-			return new FirefoxDriver();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.merge(capabilities);
+			return new FirefoxDriver(firefoxOptions);
 		case CHROME:
 			WebDriverManager.chromedriver().setup();
-			return new ChromeDriver();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.merge(capabilities);
+			return new ChromeDriver(chromeOptions);
 		case IE:
 			WebDriverManager.iedriver().setup();
 			return new InternetExplorerDriver();
@@ -35,7 +41,9 @@ public class WebDriverHandler {
 			return new OperaDriver();
 		default:
 			WebDriverManager.chromedriver().setup();
-			return new ChromeDriver();
+            ChromeOptions defaultChromeOptions = new ChromeOptions();
+            defaultChromeOptions.merge(capabilities);
+			return new ChromeDriver(defaultChromeOptions);
 		}
 	}
 }
