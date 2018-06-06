@@ -2,41 +2,77 @@ package by.tut.accounttests.util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import net.lightbody.bmp.BrowserMobProxyServer;
-import net.lightbody.bmp.mitm.CertificateAndKeySource;
-import net.lightbody.bmp.mitm.KeyStoreFileCertificateSource;
-import net.lightbody.bmp.mitm.manager.ImpersonatingMitmManager;
+import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.io.File;
 
 public class WebDriverHandler {
 
-    private static BrowserMobProxyServer browserMobProxy;
-
-	public static WebDriver loadDriver(DesiredCapabilities capabilities) {
-		WebDriverManager.chromedriver().setup();
-		ChromeOptions chromeOptions = new ChromeOptions();
-		chromeOptions.setHeadless(true);
-        chromeOptions.setAcceptInsecureCerts(true);
-        chromeOptions.addArguments("test-type");
-		chromeOptions.addArguments("--proxy-server='direct://'",
+    public static WebDriver loadDriver() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--proxy-server=0.0.0.0:8080", // EPBYMINW1275:9090
                 "--proxy-bypass-list=*",
-                "--start-maximized",
-               "window-size=1980,960",
+                "window-size=1980,960",
                 "--no-sandbox",
                 "--ignore-certificate-errors",
                 "--allow-insecure-localhost");
-        //chromeOptions.addArguments("--acceptSslCerts=true");
-        //chromeOptions.addArguments("--disable-web-security");
+
+        System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");
+
+        return new ChromeDriver(chromeOptions);
+    }
+
+    /*public static WebDriver loadDriver(DesiredCapabilities capabilities) {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        //chromeOptions.setHeadless(true);
+        chromeOptions.addArguments("--proxy-server='direct//*'", // EPBYMINW1275:9090
+                "--proxy-bypass-list=*",
+                "window-size=1980,960",
+                "--no-sandbox",
+                "--ignore-certificate-errors",
+                "--allow-insecure-localhost");
+        chromeOptions.merge(capabilities);
+        chromeOptions.setAcceptInsecureCerts(true);
+
+        System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");
+
+        return new ChromeDriver(chromeOptions);
+    }
+
+    public static Proxy getSeleniumProxy(BrowserMobProxy proxyServer) {
+        return ClientUtil.createSeleniumProxy(proxyServer);
+    }*/
+
+    public static BrowserMobProxyServer getProxyServer() {
+        BrowserMobProxyServer proxy = new BrowserMobProxyServer();
+        proxy.setTrustAllServers(true);
+        proxy.setHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+        proxy.start();
+
+        return proxy;
+    }
+
+    /*public static WebDriver loadDriver(DesiredCapabilities capabilities) {
+		WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.setHeadless(true);
+        chromeOptions.setAcceptInsecureCerts(true);
+		chromeOptions.addArguments("--proxy-server='direct//*'", // EPBYMINW1275:9090
+                "--proxy-bypass-list=*",
+                "window-size=1980,960",
+                //"--no-sandbox",
+                //"--ignore-certificate-errors",
+                "--allow-insecure-localhost");
 
         chromeOptions.merge(capabilities);
 		return new ChromeDriver(chromeOptions);
-	}
+	}*/
 
-    public static BrowserMobProxyServer createBrowserMobProxySingleton() {
+   /* public static BrowserMobProxyServer createBrowserMobProxy() {
 
        CertificateAndKeySource existingCertificateSource =
                new KeyStoreFileCertificateSource("PKCS12",
@@ -46,13 +82,33 @@ public class WebDriverHandler {
        // configure the MitmManager to use the custom KeyStore source
         ImpersonatingMitmManager mitmManager = ImpersonatingMitmManager.builder()
                 .rootCertificateSource(existingCertificateSource)
-               .trustAllServers(true)
+                .trustAllServers(true)
                 .build();
 
-        browserMobProxy = new BrowserMobProxyServer();
+        BrowserMobProxyServer browserMobProxy = new BrowserMobProxyServer();
         browserMobProxy.setMitmManager(mitmManager);
-        browserMobProxy.start(0);
+        browserMobProxy.start(8082);
 
         return browserMobProxy;
     }
+
+    public static BrowserMobProxyServer createBrowserMobProxyAndGenerateKeys() {
+
+        CertificateAndKeySource rootCertificateGenerator = RootCertificateGenerator.builder()
+                .keyGenerator(new ECKeyGenerator())
+                .build();
+
+        // tell the MitmManager to use the root certificate we just generated
+        ImpersonatingMitmManager mitmManager = ImpersonatingMitmManager.builder()
+                .rootCertificateSource(rootCertificateGenerator)
+                .serverKeyGenerator(new ECKeyGenerator())
+                .trustAllServers(true)
+                .build();
+
+        BrowserMobProxyServer browserMobProxy = new BrowserMobProxyServer();
+        browserMobProxy.setMitmManager(mitmManager);
+        browserMobProxy.start(8082);
+
+        return browserMobProxy;
+    }*/
 }

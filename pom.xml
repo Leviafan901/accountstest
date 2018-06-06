@@ -102,20 +102,20 @@
 			<version>1.5.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>htmlunit-driver</artifactId>
-			<version>2.29.2</version>
-		</dependency>
-		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>3.8</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
-		</dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.8.0-beta0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta0</version>
+        </dependency>
 		<dependency>
 			<artifactId>log4j</artifactId>
 			<groupId>log4j</groupId>
@@ -141,11 +141,11 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>2.0.6</version>
 		</dependency>
-		<dependency>
-			<groupId>net.lightbody.bmp</groupId>
-			<artifactId>browsermob-core</artifactId>
-			<version>2.1.5</version>
-		</dependency>
+        <dependency>
+            <groupId>net.lightbody.bmp</groupId>
+            <artifactId>browsermob-core</artifactId>
+            <version>2.1.5</version>
+        </dependency>
         <dependency>
             <groupId>org.littleshoot</groupId>
             <artifactId>littleproxy</artifactId>
