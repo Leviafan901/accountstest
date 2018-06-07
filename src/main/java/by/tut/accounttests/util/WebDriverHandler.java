@@ -1,26 +1,32 @@
 package by.tut.accounttests.util;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.proxy.CaptureType;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class WebDriverHandler {
 
-    public static WebDriver loadDriver() {
+    public static WebDriver loadDriver(DesiredCapabilities capabilities) {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--proxy-server=0.0.0.0:8080", // EPBYMINW1275:9090
+        /*chromeOptions.addArguments("--proxy-server=direct//*", // EPBYMINW1275:9090
                 "--proxy-bypass-list=*",
                 "window-size=1980,960",
                 "--no-sandbox",
                 "--ignore-certificate-errors",
                 "--allow-insecure-localhost");
 
-        System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");
+        System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");*/
 
+        chromeOptions.merge(capabilities);
+        chromeOptions.setAcceptInsecureCerts(true);
         return new ChromeDriver(chromeOptions);
     }
 
@@ -40,11 +46,11 @@ public class WebDriverHandler {
         System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");
 
         return new ChromeDriver(chromeOptions);
-    }
+    }*/
 
     public static Proxy getSeleniumProxy(BrowserMobProxy proxyServer) {
         return ClientUtil.createSeleniumProxy(proxyServer);
-    }*/
+    }
 
     public static BrowserMobProxyServer getProxyServer() {
         BrowserMobProxyServer proxy = new BrowserMobProxyServer();

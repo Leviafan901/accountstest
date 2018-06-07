@@ -9,7 +9,10 @@ import by.tut.accounttests.util.WebDriverHandler;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -17,6 +20,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PagesTest {
 
@@ -45,26 +53,26 @@ public class PagesTest {
     	LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
         JavaMailer.sendMail(mailer, addressee, MAIL);
 
-       //proxy = WebDriverHandler.getProxyServer();
-       //Proxy seleniumProxy = WebDriverHandler.getSeleniumProxy(proxy);
+       proxy = WebDriverHandler.getProxyServer();
+       Proxy seleniumProxy = WebDriverHandler.getSeleniumProxy(proxy);
 
-       //DesiredCapabilities capabilities = new DesiredCapabilities();
-       //capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-        driver = WebDriverHandler.loadDriver();
+       DesiredCapabilities capabilities = new DesiredCapabilities();
+       capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+        driver = WebDriverHandler.loadDriver(capabilities);
         pages = PageFactory.initElements(driver, Pages.class);
         testContext.setAttribute("WebDriver", this.driver);// set driver for listeners
     }
 
     @Test
     public void shouldCheckMailInSentFolderAndReturnTrue() {
-        //proxy.newHar("TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()));
+        proxy.newHar("TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()));
 
     	LOGGER.info("Step 2. Load page with url http://mail.tut.by.");
-       //proxy.newPage("http://mail.tut.by");
+       proxy.newPage("http://mail.tut.by");
         pages.mailTutByPage().loadPage();
         LOGGER.info("Step 3. Login mailbox with account " + mailer.getEmail());
         pages.mailTutByPage().logIn(mailer);
-        //proxy.endPage();
+        proxy.endPage();
        // proxy.newPage("yandex.by - logged account" + mailer.getEmail());
         LOGGER.info("Step 4. Get into sent folder of account " + mailer.getEmail());
         pages.mailBoxPage().getIntoSentFolder();
@@ -95,7 +103,7 @@ public class PagesTest {
         pages.mailBoxPage().logOut();
       // proxy.endPage();
 
-        //har = proxy.getHar();
+        har = proxy.getHar();
         
         Assert.assertTrue(isInboxMail);
     }
@@ -105,14 +113,14 @@ public class PagesTest {
     	LOGGER.info("Test suite is over!");
 
 
-       /*File harFile = new File("test-output/TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
+       File harFile = new File("test-output/TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
         try {
             harFile.createNewFile();
             har.writeTo(harFile);
         } catch (IOException e) {
             LOGGER.error(e);
         }
-        proxy.stop();*/
+        proxy.stop();
         driver.quit();
     }
 }
