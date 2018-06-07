@@ -54,6 +54,7 @@ public class PagesTest {
         JavaMailer.sendMail(mailer, addressee, MAIL);
 
        proxy = WebDriverHandler.getProxyServer();
+       //proxy.setTrustAllServers(true);
        Proxy seleniumProxy = WebDriverHandler.getSeleniumProxy(proxy);
 
        DesiredCapabilities capabilities = new DesiredCapabilities();
