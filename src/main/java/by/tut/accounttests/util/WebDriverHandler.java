@@ -18,12 +18,12 @@ public class WebDriverHandler {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(true);
         chromeOptions.setAcceptInsecureCerts(true);
-        /*chromeOptions.addArguments("--proxy-server=direct//*", // EPBYMINW1275:9090
-                "--proxy-bypass-list=*",
+        chromeOptions.addArguments("--proxy-server=direct//*", // EPBYMINW1275:9090
+                //"--proxy-bypass-list=''",
                 "window-size=1980,960",
-                "--no-sandbox"//,
-               // "--ignore-certificate-errors",
-               // "--allow-insecure-localhost"
+                //"--no-sandbox"//,
+               "--ignore-certificate-errors",
+                "--allow-insecure-localhost"
         );
 
         //System.setProperty("webdriver.chrome.logfile", "D:/github/accountstest/chromedriver_issue.log");*/

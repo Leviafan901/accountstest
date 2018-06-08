@@ -29,7 +29,7 @@ import java.util.Date;
 public class PagesTest {
 
     private final static Logger LOGGER = TestLogger.getLogger(PagesTest.class);
-	
+
     private static final Mail MAIL = new Mail("Test mail", "Test mail.");
     private static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd HH-mm-ss";
 
@@ -42,23 +42,22 @@ public class PagesTest {
 
     @Factory(dataProvider = "accounts", dataProviderClass = TestData.class)
     public PagesTest(UserAccount mailer, UserAccount addressee) {
-    	this.mailer = mailer;
+        this.mailer = mailer;
         this.addressee = addressee;
     }
 
     @BeforeClass(alwaysRun = true)
-    public void setup(ITestContext testContext)  {
+    public void setup(ITestContext testContext) {
         LOGGER.info("Started test suite!");
         LOGGER.info("Test will be executed with next test data: " + addressee.getEmail() + ", " + mailer.getEmail());
-    	LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
+        LOGGER.info("Step 1. Send mail to " + addressee.getEmail() + " with Java Mail Api.");
         JavaMailer.sendMail(mailer, addressee, MAIL);
 
-       proxy = WebDriverHandler.getProxyServer();
-       //proxy.setTrustAllServers(true);
-       Proxy seleniumProxy = WebDriverHandler.getSeleniumProxy(proxy);
+        proxy = WebDriverHandler.getProxyServer();
+        Proxy seleniumProxy = WebDriverHandler.getSeleniumProxy(proxy);
 
-       DesiredCapabilities capabilities = new DesiredCapabilities();
-       capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
         driver = WebDriverHandler.loadDriver(capabilities);
         pages = PageFactory.initElements(driver, Pages.class);
         testContext.setAttribute("WebDriver", this.driver);// set driver for listeners
@@ -66,15 +65,15 @@ public class PagesTest {
 
     @Test
     public void shouldCheckMailInSentFolderAndReturnTrue() {
-        proxy.newHar("TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()));
+        proxy.newHar("TestRun - " + new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()));
 
-    	LOGGER.info("Step 2. Load page with url http://mail.tut.by.");
-       proxy.newPage("http://mail.tut.by");
+        LOGGER.info("Step 2. Load page with url http://mail.tut.by.");
+        proxy.newPage("http://mail.tut.by");
         pages.mailTutByPage().loadPage();
         LOGGER.info("Step 3. Login mailbox with account " + mailer.getEmail());
         pages.mailTutByPage().logIn(mailer);
         proxy.endPage();
-       // proxy.newPage("yandex.by - logged account" + mailer.getEmail());
+        proxy.newPage("yandex.by - logged account" + mailer.getEmail());
         LOGGER.info("Step 4. Get into sent folder of account " + mailer.getEmail());
         pages.mailBoxPage().getIntoSentFolder();
         LOGGER.info("Step 5. Check sent messages to the account " + addressee.getEmail());
@@ -83,38 +82,37 @@ public class PagesTest {
         pages.mailBoxPage().deleteMessages();
         LOGGER.info("Step 7. Logout from account " + mailer.getEmail());
         pages.mailBoxPage().logOut();
-        //proxy.endPage();
+        proxy.endPage();
 
         Assert.assertTrue(isSentMail);
     }
 
     @Test
     public void shouldCheckMailInboxFolderAndReturnTrue() {
-    	LOGGER.info("Step 8. Load page tiwh url http://mail.tut.by.");
-        // proxy.newPage("http://mail.tut.by");
+        LOGGER.info("Step 8. Load page tiwh url http://mail.tut.by.");
+        proxy.newPage("http://mail.tut.by");
         pages.mailTutByPage().loadPage();
         LOGGER.info("Step 9. Login mailbox with account " + addressee.getEmail());
         pages.mailTutByPage().logIn(addressee);
-       //proxy.newPage("Logged into mailbox - yandex.by, account " + addressee.getEmail());
+        proxy.newPage("Logged into mailbox - yandex.by, account " + addressee.getEmail());
         LOGGER.info("Step 10. Check messages in inbox foldr from account " + mailer.getEmail());
         boolean isInboxMail = pages.mailBoxPage().checkMail(mailer, MAIL);
         LOGGER.info("Step 11. Delete all sented messages, clear up for next test class instance.");
         pages.mailBoxPage().deleteMessages();
         LOGGER.info("Step 12. Logout from account " + addressee.getEmail());
         pages.mailBoxPage().logOut();
-      // proxy.endPage();
+        proxy.endPage();
 
-        har = proxy.getHar();
-        
+
         Assert.assertTrue(isInboxMail);
     }
-    
+
     @AfterClass(alwaysRun = true)
     public void teardown() {
-    	LOGGER.info("Test suite is over!");
+        LOGGER.info("Test suite is over!");
 
-
-       File harFile = new File("test-output/TestRun - " +  new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
+        har = proxy.getHar();
+        File harFile = new File("test-output/TestRun - " + new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
         try {
             harFile.createNewFile();
             har.writeTo(harFile);
