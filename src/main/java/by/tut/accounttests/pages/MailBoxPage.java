@@ -23,7 +23,7 @@ public class MailBoxPage extends AbstractPage {
     @FindBy(css = "div.mail-User-Name")
     private WebElement userMailBoxName;
 
-    @FindBy(css = "a[data-metric=\"Выход\"] ")
+    @FindBy(xpath = "//a[contains(text(), 'Выход')] ")
     private WebElement logoutButton;
     
     @FindBy(css = "span._nb-checkbox-flag._nb-checkbox-normal-flag")  

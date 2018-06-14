@@ -118,8 +118,12 @@ public class PagesTest {
             har.writeTo(harFile);
         } catch (IOException e) {
             LOGGER.error(e);
+        } finally {
+            proxy.stop();
+            driver.quit();
         }
-        proxy.stop();
-        driver.quit();
+
     }
+
+
 }
