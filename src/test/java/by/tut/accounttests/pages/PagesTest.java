@@ -112,7 +112,7 @@ public class PagesTest {
         LOGGER.info("Test suite is over!");
 
         har = proxy.getHar();
-        File harFile = new File("test-output/TestRun - " + new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
+        File harFile = new File("test-output/tests-hars/TestRunHar - " + new SimpleDateFormat(DATE_FORMAT_PATTERN).format(new Date()) + ".har");
         try {
             harFile.createNewFile();
             har.writeTo(harFile);
